@@ -2,17 +2,19 @@
 
 cd "$(dirname "$0")" || exit 1
 
-if [ ! -d luajit ]; then
-    git clone git@github.com:capr/luajit.git
-    cd luajit || exit 1
-    git remote add upstream http://luajit.org/git/luajit-2.0.git
-else
-    cd luajit || exit 1
-fi
+getupdate() {
+	(if [ ! -d $1 ]; then
+		git clone git@github.com:capr/luajit.git $1
+		cd $1 || return
+		git remote add upstream http://luajit.org/git/luajit-2.0.git
+	else
+		cd $1 || return
+	fi
+	git checkout $2
+	git pull upstream $2
+	git push origin
+	)
+}
 
-git checkout master
-git pull upstream master
-git push origin
-git checkout v2.1
-git pull upstream v2.1
-git push origin
+getupdate luajit-2.1 v2.1
+getupdate luajit-2.0 master

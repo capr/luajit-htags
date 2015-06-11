@@ -11,9 +11,12 @@ mktags() {
     mkdir -p $gdir
     mkdir -p $hdir
     gtags $gdir
-    htags -anoT -d $gdir $hdir
+    rm -f $hdir/HTML/style.css
+    htags -anoTx -t $3 --insert-header $rootdir/header.html -d $gdir $hdir
+    ln -sf $rootdir/style.css $hdir/HTML/style.css
     )
 }
 
-mktags luajit luajit/src
-mktags dynasm luajit/dynasm
+mktags luajit-2.1 luajit-2.1/src     luajit
+mktags luajit-2.0 luajit-2.0/src     luajit-2.0
+mktags dynasm     luajit-2.1/dynasm  dynasm
