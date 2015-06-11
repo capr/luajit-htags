@@ -1,0 +1,19 @@
+#!/bin/bash
+
+rootdir=$(dirname "$0")
+cd $rootdir || exit 1
+rootdir=$PWD
+
+mktags() {
+    (cd $2 || return
+    local gdir=$rootdir/$1.gtags
+    local hdir=$rootdir/$1.htags
+    mkdir -p $gdir
+    mkdir -p $hdir
+    gtags $gdir
+    htags -anoT -d $gdir $hdir
+    )
+}
+
+mktags luajit luajit/src
+mktags dynasm luajit/dynasm
