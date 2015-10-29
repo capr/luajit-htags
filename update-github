@@ -3,16 +3,10 @@
 cd "$(dirname "$0")" || exit 1
 
 getupdate() {
-	(if [ ! -d $1 ]; then
-		git clone git@github.com:capr/luajit.git $1
-		cd $1 || return
-		git remote add upstream http://luajit.org/git/luajit-2.0.git
-	else
-		cd $1 || return
-	fi
+	([ ! -d $1 ] && git clone https://github.com/LuaJIT/LuaJIT.git $1
+	cd $1 || return
 	git checkout $2
-	git pull upstream $2
-	git push origin
+	git pull origin $2
 	)
 }
 
