@@ -1,4 +1,5 @@
 #!/bin/bash
+# rebuild all htags
 
 rootdir=$(dirname "$0")
 cd $rootdir || exit 1
